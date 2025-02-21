@@ -2,7 +2,6 @@ from django.contrib.auth.models import User
 from django.db import models
 
 
-
 class Base(models.Model):
     is_published = models.BooleanField(
         default=True,
@@ -39,8 +38,8 @@ class Category(Base):
     description = text = models.TextField(verbose_name='Описание')
     slug = models.SlugField(
         verbose_name='Идентификатор',
-        help_text='Идентификатор страницы для URL; разрешены символы латиницы, цифры,'
-        'дефис и подчёркивание.'
+        help_text='Идентификатор страницы для URL; разрешены символы' 
+        'латиницы, цифры,дефис и подчёркивание.'
     )
 
     class Meta:
