@@ -1,6 +1,5 @@
 from django.shortcuts import render, get_object_or_404
 from django.utils import timezone
-from unicodedata import category
 
 from .models import Category, Post
 
@@ -8,10 +7,10 @@ from .models import Category, Post
 def index(request):
     template = 'blog/index.html'
     post_list = Post.objects.filter(
-            pub_date__lte=timezone.now,
-            is_published=True,
-            category__is_published=True
-        ).order_by('pub_date')[:5]
+        pub_date__lte=timezone.now(),
+        is_published=True,
+        category__is_published=True
+    ).order_by('pub_date')[:5]
     context = {'posts': post_list}
     return render(request, template, context)
 
