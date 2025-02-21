@@ -1,5 +1,11 @@
 from django.contrib.auth.models import User
 from django.db import models
+from django.utils.translation import gettext_lazy as _
+
+class Post(models.Model):
+    title = models.CharField(max_length=200, verbose_name=_("Title"))
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name=_("Created At"))
+
 
 
 class BaseModel(models.Model):
@@ -38,6 +44,7 @@ class Category(BaseModel):
     description = text = models.TextField(verbose_name='Описание')
     slug = models.SlugField(
         verbose_name='Идентификатор',
+        unique=True,
         help_text='Идентификатор страницы для URL; разрешены символы'
                   'латиницы, цифры,дефис и подчёркивание.'
     )
