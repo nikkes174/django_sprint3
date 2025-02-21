@@ -2,10 +2,10 @@ from django.contrib.auth.models import User
 from django.db import models
 
 
-class Base(models.Model):
+class BaseModel(models.Model):
     is_published = models.BooleanField(
         default=True,
-        verbose_name='Название места',
+        verbose_name='Опубликовано',
         help_text='Снимите галочку, чтобы скрыть публикацию.'
     )
     created_at = models.DateTimeField(verbose_name='Добавлено')
@@ -15,7 +15,7 @@ class Base(models.Model):
 
 
 # Географическая метка
-class Location(Base):
+class Location(BaseModel):
     name = models.CharField(
         max_length=256,
         verbose_name='Название места'
@@ -30,7 +30,7 @@ class Location(Base):
 
 
 # Тематические категории
-class Category(Base):
+class Category(BaseModel):
     title = models.CharField(
         max_length=256,
         verbose_name='Заголовок'
@@ -50,7 +50,7 @@ class Category(Base):
         return self.title
 
 
-class Post(Base):
+class Post(BaseModel):
     title = models.CharField(
         max_length=256,
         verbose_name='Заголовок'
@@ -64,7 +64,7 @@ class Post(Base):
     author = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
-        related_name='user',
+        related_name='posts',
         verbose_name='Автор публикации'
     )
     location = models.ForeignKey(
@@ -72,19 +72,22 @@ class Post(Base):
         on_delete=models.SET_NULL,
         null=True,
         blank=True,
-        verbose_name='Местоположение'
+        verbose_name='Местоположение',
+        related_name='posts'
     )
     category = models.ForeignKey(
         Category,
         on_delete=models.SET_NULL,
         null=True,
         blank=True,
-        verbose_name='Категория'
+        verbose_name='Категория',
+        related_name='posts'
     )
 
     class Meta:
         verbose_name = 'публикация'
         verbose_name_plural = 'Публикации'
+        ordering = ['-pub_date']
 
     def __str__(self):
         return self.title
