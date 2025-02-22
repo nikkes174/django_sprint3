@@ -1,28 +1,18 @@
 from django.contrib import admin
+
 from .models import Category, Location, Post
 
 
-class CategoryAdmin(admin.ModelAdmin):
-    list_editable = (
-        'title',
-        'description',
-        'slug',
-    )
-
-
-class LocationAdmin(admin.ModelAdmin):
-    list_editable = (
-        'name'
-    )
-
-
+@admin.register(Post)
 class PostAdmin(admin.ModelAdmin):
-    list_editable = (
-        'title',
-        'Текст'
-    )
+    list_display = ('title')
 
 
-admin.site.register(Category, CategoryAdmin)
-admin.site.register(Location, LocationAdmin)
-admin.site.register(Post, PostAdmin)
+@admin.register(Location)
+class LocationAdmin(admin.ModelAdmin):
+    list_display = ('name')
+
+
+@admin.register(Category)
+class CategoryPostAdmin(admin.ModelAdmin):
+    list_display = ('title')
